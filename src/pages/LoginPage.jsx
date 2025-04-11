@@ -13,8 +13,6 @@ const LoginPage = ({ onLogin }) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    console.log("Sending login request with:", formData); // Debugging: Log the form data
-
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -24,7 +22,7 @@ const handleSubmit = async (e) => {
     });
 
     const data = await response.json();
-    console.log("Response Data:", data); // Debugging: Log the response data
+    console.log("Backend Response:", data); // Debugging: Log the backend response
 
     if (response.ok) {
       localStorage.setItem("token", data.token); // Save JWT token
@@ -32,10 +30,11 @@ const handleSubmit = async (e) => {
       onLogin();
       navigate("/");
     } else {
+      console.error("Login failed:", data.message); // Debugging: Log the error message
       setError(data.message || "Login failed");
     }
   } catch (err) {
-    console.error("An error occurred during login:", err);
+    console.error("An error occurred during login:", err); // Debugging: Log the error
     setError("An error occurred. Please try again.");
   }
 };
