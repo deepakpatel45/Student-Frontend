@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import AddJobForm from "../components/AddJobForm";
-import JobList from "../components/JobList";
+import AddJobForm from "../Components/AddJobForm";
+import JobList from "../Components/JobList";
 
 const HomePage = ({ onLogout }) => {
   const [jobs, setJobs] = useState([]);
