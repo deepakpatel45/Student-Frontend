@@ -10,7 +10,7 @@ const LoginPage = ({ onLogin }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     console.log("Sending login request with:", formData); // Debugging: Log the form data
@@ -28,6 +28,7 @@ const LoginPage = ({ onLogin }) => {
 
     if (response.ok) {
       localStorage.setItem("token", data.token); // Save JWT token
+      console.log("Token saved to localStorage:", data.token); // Debugging: Log the token
       onLogin();
       navigate("/");
     } else {
