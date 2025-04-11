@@ -17,6 +17,7 @@ const HomePage = ({ onLogout }) => {
       });
 
       const data = await response.json();
+      console.log("Response Data:", data);
       if (response.ok) {
         setJobs(data);
       } else {
