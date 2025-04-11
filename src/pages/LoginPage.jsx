@@ -10,30 +10,34 @@ const LoginPage = ({ onLogin }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    console.log("Sending login request with:", formData); // Debugging: Log the form data
 
-      const data = await response.json();
-      if (response.ok) {
-        localStorage.setItem("token", data.token); // Save JWT token
-        onLogin();
-        navigate("/");
-      } else {
-        setError(data.message || "Login failed");
-      }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+    console.log("Response Data:", data); // Debugging: Log the response data
+
+    if (response.ok) {
+      localStorage.setItem("token", data.token); // Save JWT token
+      onLogin();
+      navigate("/");
+    } else {
+      setError(data.message || "Login failed");
     }
-  };
-
+  } catch (err) {
+    console.error("An error occurred during login:", err);
+    setError("An error occurred. Please try again.");
+  }
+};
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-80">
